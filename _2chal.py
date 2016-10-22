@@ -13,9 +13,8 @@ def strxor(a,b):
 
 xor = strxor(e_s1,e_s2)
 
-'''
-if xor == result:
-	print('yay!')
-else:
-	print('dang!')
-'''
+if __name__ == '__main__':
+	if xor == result:
+		print('yay!')
+	else:
+		print('dang!')
