@@ -6,9 +6,16 @@ e_result = '746865206b696420646f6e277420706c6179'
 
 result = hex(int(e_result,16))
 
-xor = hex(int(e_s1, 16) ^ int(e_s2, 16))
+def strxor(a,b):
+	a = int(a,16)
+	b = int(b,16)
+	return hex(a ^ b)
 
+xor = strxor(e_s1,e_s2)
+
+'''
 if xor == result:
 	print('yay!')
 else:
 	print('dang!')
+'''
