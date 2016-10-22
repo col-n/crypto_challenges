@@ -13,9 +13,10 @@ fdict = dict(zip(letters, freqs))
 
 def score(x):
 	score = 0
-	char = chr(i).upper()
-	if char in fdict:
-		score += fdict[char]
+	for i in x:
+		char = chr(i).upper()
+		if char in fdict:
+			score += fdict[char]
 	return score
 
 def bustxor(x):
@@ -23,7 +24,18 @@ def bustxor(x):
 		return score(p[1])
 	return max([(i, strxor_c(x,i)) for i in range(0,256)], key = key)
 
-myster_code = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
-u_m = binascii.unhexlify(myster_code)
-broken_code = bustxor(u_m)
-print('the key is',chr(broken_code[0]),'and the message is:',broken_code[1].decode('utf-8'))
+def showtext(x):
+	u = binascii.unhexlify(x)
+	b_c = bustxor(u)
+	return chr(b_c[0]), b_c[1]
+
+if __name__ == '__main__':
+	myster_code = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
+
+	code = showtext(myster_code)
+
+	print(code)
+
+#u_m = binascii.unhexlify(myster_code)
+#broken_code = bustxor(u_m)
+#print('the key is',chr(broken_code[0]),'and the message is:',broken_code[1].decode('utf-8'))

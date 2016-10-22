@@ -12,7 +12,9 @@ should_y = 'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t'
 
 y = hex_64(x)
 
-if y == should_y:
-	print('yay!')
-else:
-	print('dang!')
+if __name__ == '__main__':
+
+	if y == should_y:
+		print('yay!')
+	else:
+		print('dang!')
