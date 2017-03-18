@@ -23,7 +23,12 @@ def normaleditd(x, k):
     scores = [hammy(p[0], p[1])/float(k) for p in pairs][0:6]
     return sum(scores) / len(scores)
 
-#this is the meat of it ...
+#this is the meat of it-
+#first, we set the block size 
+#then we transporse them by making a blcok that is the first byte of every single block (and on and on)
+#we then solve each one of those as if it were single byte XOR 
+#which we we do by frequency analysis of the resulting (possible) decrypted value (from previous challange)
+
 def breakRepeatingKeyXor(x, k):
     blocks = [x[i:i+k] for i in range(0, len(x), k)]
     transposedBlocks = list(itertools.zip_longest(*blocks, fillvalue=0))
