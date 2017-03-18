@@ -1,0 +1,39 @@
+#challenge 6
+
+import base64
+import itertools
+import chal_3_chal_5
+
+#make sure we can find the hamming distance between two bytearrays (bitwise of course)
+t = b'this is a test'
+w = b'wokka wokka!!!'
+
+def hammy(x,y):
+    return sum(bin(i^j).count("1") for i,j in zip(x,y))
+
+print(hammy(t,w))
+#the expected (true) answer is 37
+
+f = base64.b64decode(open('6.txt','r').read())
+
+#find the normalized edit distance by breaking the blocks into groups, pairing them up, and getting the normalized score
+def normaleditd(x, k):
+    blocks = [x[i:i+k] for i in range(0, len(x), k)][0:4]
+    pairs = list(itertools.combinations(blocks, 2))
+    scores = [hammy(p[0], p[1])/float(k) for p in pairs][0:6]
+    return sum(scores) / len(scores)
+
+#this is the meat of it ...
+def breakRepeatingKeyXor(x, k):
+    blocks = [x[i:i+k] for i in range(0, len(x), k)]
+    transposedBlocks = list(itertools.zip_longest(*blocks, fillvalue=0))
+    key = [chal_3_chal_5.breakSingleByteXOR(bytes(x))[0] for x in transposedBlocks]
+    return bytes(key)
+
+#since we know the key is between 2 and 40 we say so ...and we use a lambda function to simplify the code (cause duh .. and cause I got stumped and got help from a much better programmer... ;)
+
+k = min(range(2, 41), key=lambda k: normaleditd(x, k))
+
+key = breakRepeatingKeyXor(x, k)
+y = chal_3_chal_5.encodeRepeatingKeyXor(x, key)
+print(key, y)
